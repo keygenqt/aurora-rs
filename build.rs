@@ -21,11 +21,6 @@ fn main() {
         .write_to_file(PathBuf::from(env::var("OUT_DIR").unwrap()).join("libappdir.rs"))
         .expect("Couldn't write appdir!");
 
-    // C++ streamcamera
-    let stream_camera = pkg_config::probe_library("streamcamera").unwrap();
-    let stream_camera_include_paths = stream_camera.include_paths.iter().map(PathBuf::as_path);
-    CFG.exported_header_dirs.extend(stream_camera_include_paths);
-
     // Qt5::Qt5Core
     let qt5_core = pkg_config::probe_library("Qt5Core").unwrap();
     let qt5_core_include = qt5_core.include_paths.iter().map(PathBuf::as_path);
@@ -48,7 +43,7 @@ fn main() {
             println!("cargo:rustc-link-search=/usr/lib/gcc-cross/aarch64-linux-gnu/12");
         }
         // @todo aarch64 qt crash
-        for bridge_name in ["format", "qnetwork", "streamcamera"] {
+        for bridge_name in ["format", "qnetwork"] {
             cxx_build::bridge(format!("src/cxx/rust/cxx_{bridge_name}.rs"))
                 .std("c++17")
                 .file(format!("src/cxx/cpp/{bridge_name}/cxx_{bridge_name}.cpp"))

@@ -1,4 +1,4 @@
-# Aurora for Rust
+# Rust for Aurora OS
 
 > The project is under development!
 
@@ -6,7 +6,6 @@ A demonstration of cross-platform assembly of a Rust application for Aurora OS a
 
 - D-Bus (deviceinfo)
 - Clib: (libappdir)
-- C++: (clean, streamcamera)
 - Qt: (QNetworkConfigurationManager)
 
 ### Build
@@ -31,10 +30,10 @@ env.volumes = [
 # aarch64
 [target.aarch64-unknown-linux-gnu]
 env.volumes = [
-    "PKG_CONFIG_SYSROOT_DIR=/Users/keygenqt/.aurora-sysroot/aarch64",
-    "PKG_CONFIG_PATH=/Users/keygenqt/.aurora-sysroot/aarch64/usr/lib/pkgconfig",
-    "PKG_CONFIG_LIBDIR=/Users/keygenqt/.aurora-sysroot/aarch64/usr/lib",
-    "LD_LIBRARY_PATH=/Users/keygenqt/.aurora-sysroot/aarch64/usr/lib",
+    "PKG_CONFIG_SYSROOT_DIR=/home/keygenqt/.aurora-sysroot/aarch64",
+    "PKG_CONFIG_PATH=/home/keygenqt/.aurora-sysroot/aarch64/usr/lib/pkgconfig",
+    "PKG_CONFIG_LIBDIR=/home/keygenqt/.aurora-sysroot/aarch64/usr/lib",
+    "LD_LIBRARY_PATH=/home/keygenqt/.aurora-sysroot/aarch64/usr/lib",
 ]
 
 # x86_64
@@ -76,4 +75,8 @@ CROSS_CONFIG="Cross.local.toml" cross build --target=x86_64-unknown-linux-gnu --
 
 ### Known issues
 
-- ABI problem of `stdc++` and C++ libraries on aarch64.
+- ABI problem of `stdc++` and C++ libraries on aarch64 (SDK 5.2).
+
+### Preview
+
+![preview](data/preview.png)

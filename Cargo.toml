@@ -19,15 +19,15 @@ pkg-config = "0.3"
 
 # armv7hl + .cargo/config.toml
 [workspace.metadata.cross.target.armv7-unknown-linux-gnueabihf]
-image = "debian:12"
+image = "ubuntu:24.04"
 pre-build = ["apt-get update && apt-get -y install build-essential clang pkg-config g++-arm-linux-gnueabihf"]
 
 # aarch64 + .cargo/config.toml
 [workspace.metadata.cross.target.aarch64-unknown-linux-gnu]
-image = "debian:12"
+image = "ubuntu:24.04"
 pre-build = ["apt-get update && apt-get -y install build-essential clang pkg-config g++-aarch64-linux-gnu"]
 
 # x86_64 + .cargo/config.toml
 [workspace.metadata.cross.target.x86_64-unknown-linux-gnu]
-image = "debian:12"
+image = "ubuntu:24.04"
 pre-build = ["apt-get update && apt-get -y install build-essential clang pkg-config"]
