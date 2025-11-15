@@ -3,6 +3,7 @@
 # Project dir
 cd "$(dirname "$(realpath "$0")")" || exit
 
+# Set aurora-cli
 VAR_CLI="aurora-cli"
 
 # Check OS
@@ -30,7 +31,7 @@ if [ ! -d "$HOME/.aurora-sysroot/$VAR_ARCH/usr/include" ]; then
   $VAR_CLI services --sysroot || exit
 fi
 
-# Moc Qt files
+# Moc Q_OBJECT files
 $VAR_CLI services --moc ./ || exit
 
 # Install cross

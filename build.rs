@@ -26,7 +26,7 @@ fn main() {
     let qt5_core_include = qt5_core.include_paths.iter().map(PathBuf::as_path);
     CFG.exported_header_dirs.extend(qt5_core_include);
 
-    // Qt5::QtMultimedia
+    // Qt5::Qt5Network
     let qt5_network = pkg_config::probe_library("Qt5Network").unwrap();
     let qt5_network_include = qt5_network.include_paths.iter().map(PathBuf::as_path);
     CFG.exported_header_dirs.extend(qt5_network_include);
