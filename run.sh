@@ -7,15 +7,11 @@ VAR_CLI="aurora-cli"
 
 # Check OS
 if [[ "$OSTYPE" == "linux"* ]]; then
-  # path to binary or install
-  # VAR_CLI="$HOME/Documents/Gitcode/Projects/PROJECT/aurora-cli/target/debug/aurora-cli"
   VAR_ARCH="x86_64"
   VAR_TARGET="x86_64-unknown-linux-gnu"
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  # path to binary or install
-  # VAR_CLI="$HOME/Documents/Gitcode/Projects/PROJECT/aurora-cli/target/debug/aurora-cli"
   VAR_ARCH="aarch64"
   VAR_TARGET="aarch64-unknown-linux-gnu"
 fi
