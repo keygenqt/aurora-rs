@@ -4,9 +4,10 @@
 
 A demonstration of cross-platform assembly of a Rust application for Aurora OS and interaction with the main interfaces:
 
-- D-Bus (deviceinfo)
-- Clib: (libappdir)
-- Qt: (QNetworkConfigurationManager)
+- D-Bus, (deviceinfo).
+- Clib, (libappdir).
+- С++, (example cxx).
+- Qt, (QNetworkConfigurationManager).
 
 ### Build
 
