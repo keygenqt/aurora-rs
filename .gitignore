@@ -1,0 +1,19 @@
+# IDE
+.vscode
+.idea
+
+# Rust
+/target
+
+# OS
+.DS_Store
+
+# Qt
+*.moc
+
+# Cross
+Cross.local.toml
+
+# Builds
+rpm/bin/*
+rpm/RPMS/*
