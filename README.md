@@ -25,7 +25,7 @@ env.volumes = [
     "PKG_CONFIG_SYSROOT_DIR=/home/keygenqt/.aurora-sysroot/armv7hl",
     "PKG_CONFIG_PATH=/home/keygenqt/.aurora-sysroot/armv7hl/usr/lib/pkgconfig",
     "PKG_CONFIG_LIBDIR=/home/keygenqt/.aurora-sysroot/armv7hl/usr/lib",
-    "LD_LIBRARY_PATH=/home/keygenqt/.aurora-sysroot/aarch64/usr/lib",
+    "LD_LIBRARY_PATH=/home/keygenqt/.aurora-sysroot/armv7hl/usr/lib",
 ]
 
 # aarch64
@@ -46,6 +46,8 @@ env.volumes = [
     "LD_LIBRARY_PATH=/home/keygenqt/.aurora-sysroot/x86_64/usr/lib",
 ]
 ```
+
+> For Windows you need to use sysroot-unix.
 
 ### Build
 

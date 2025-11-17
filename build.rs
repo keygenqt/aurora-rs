@@ -4,6 +4,8 @@ use cxx_build::CFG;
 
 fn main() {
     // Init
+    // std::thread::sleep(std::time::Duration::from_secs(60));
+
     let sysroot = PathBuf::from(env::var("PKG_CONFIG_SYSROOT_DIR").unwrap());
     let include = &sysroot.join("usr/include").to_string_lossy().to_string();
     let lib = &sysroot.join("usr/lib").to_string_lossy().to_string();

@@ -4,17 +4,26 @@
 cd "$(dirname "$(realpath "$0")")" || exit
 
 # Set aurora-cli
-VAR_CLI="aurora-cli"
+# VAR_CLI="aurora-cli" @todo
+VAR_CLI="C:\Users\keygenqt\Documents\Gitcode\Projects\aurora-cli\target\debug\aurora-cli.exe"
 
 # Check OS
 if [[ "$OSTYPE" == "linux"* ]]; then
   VAR_ARCH="x86_64"
   VAR_TARGET="x86_64-unknown-linux-gnu"
+  VAR_SDK="$HOME/AuroraOS"
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   VAR_ARCH="aarch64"
   VAR_TARGET="aarch64-unknown-linux-gnu"
+  VAR_SDK="$HOME/AuroraOS"
+fi
+
+if [[ "$OSTYPE" == "msys"* ]]; then
+  VAR_ARCH="x86_64"
+  VAR_TARGET="x86_64-unknown-linux-gnu"
+  VAR_SDK="$HOME/../../AuroraOS"
 fi
 
 if [[ -z "$VAR_ARCH" ]]; then
@@ -58,21 +67,21 @@ mkdir rpm/bin
 cp -fr $PWD/target/$VAR_TARGET/debug/aurora-rs $PWD/rpm/bin || exit
 
 # Build rpm
-$VAR_CLI services --rpmbuild ./rpm || exit
+$VAR_CLI services --rpmbuild "$PWD/rpm" || exit
 
 # Sign rpm
-$VAR_CLI services --keysign ./rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm || exit
+$VAR_CLI services --keysign "$PWD/rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm" || exit
 
 # Remove old rmp
 ssh -o ConnectTimeout=2 \
   -o StrictHostKeyChecking=no \
   -p 2223 defaultuser@localhost \
-  -i $HOME/AuroraOS/vmshare/ssh/private_keys/sdk \
-  "rm /home/defaultuser/Downloads/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm"
+  -i $VAR_SDK/vmshare/ssh/private_keys/sdk \
+  "rm /home/defaultuser/Downloads/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm" 2>/dev/null
 
 # Upload
 scp -P 2223 \
-  -i $HOME/AuroraOS/vmshare/ssh/private_keys/sdk \
+  -i $VAR_SDK/vmshare/ssh/private_keys/sdk \
   ./rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm \
   defaultuser@localhost:/home/defaultuser/Downloads
 
@@ -80,7 +89,7 @@ scp -P 2223 \
 ssh -o ConnectTimeout=2 \
   -o StrictHostKeyChecking=no \
   -p 2223 defaultuser@localhost \
-  -i $HOME/AuroraOS/vmshare/ssh/private_keys/sdk \
+  -i $VAR_SDK/vmshare/ssh/private_keys/sdk \
   "gdbus call --system --dest ru.omp.APM --object-path /ru/omp/APM --method ru.omp.APM.Remove com.keygenqt.aurora_rs '{}'"
 
 
@@ -88,12 +97,12 @@ ssh -o ConnectTimeout=2 \
 ssh -o ConnectTimeout=2 \
   -o StrictHostKeyChecking=no \
   -p 2223 defaultuser@localhost \
-  -i $HOME/AuroraOS/vmshare/ssh/private_keys/sdk \
+  -i $VAR_SDK/vmshare/ssh/private_keys/sdk \
   "gdbus call --system --dest ru.omp.APM --object-path /ru/omp/APM --method ru.omp.APM.Install ~/Downloads/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm '{}'" || exit
 
 # Run
 ssh -o ConnectTimeout=2 \
   -o StrictHostKeyChecking=no \
   -p 2223 defaultuser@localhost \
-  -i $HOME/AuroraOS/vmshare/ssh/private_keys/sdk \
+  -i $VAR_SDK/vmshare/ssh/private_keys/sdk \
   "runtime-manager-tool Control startDebug com.keygenqt.aurora_rs --output-to-console" || exit
