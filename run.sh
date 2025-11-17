@@ -4,8 +4,7 @@
 cd "$(dirname "$(realpath "$0")")" || exit
 
 # Set aurora-cli
-# VAR_CLI="aurora-cli" @todo
-VAR_CLI="C:\Users\keygenqt\Documents\Gitcode\Projects\aurora-cli\target\debug\aurora-cli.exe"
+VAR_CLI="aurora-cli"
 
 # Check OS
 if [[ "$OSTYPE" == "linux"* ]]; then
