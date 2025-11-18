@@ -91,7 +91,6 @@ ssh -o ConnectTimeout=2 \
   -i $VAR_SDK/vmshare/ssh/private_keys/sdk \
   "gdbus call --system --dest ru.omp.APM --object-path /ru/omp/APM --method ru.omp.APM.Remove com.keygenqt.aurora_rs '{}'"
 
-
 # Install
 ssh -o ConnectTimeout=2 \
   -o StrictHostKeyChecking=no \

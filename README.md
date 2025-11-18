@@ -72,8 +72,14 @@ CROSS_CONFIG="Cross.local.toml" cross build --target=x86_64-unknown-linux-gnu --
 
 ### Run on emulator
 
+macOS / Linux:
 ```shell
 ./run.sh
+```
+
+Windows:
+```shell
+sh run.sh
 ```
 
 ### Known issues
