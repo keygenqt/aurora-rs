@@ -49,24 +49,14 @@ cargo install cross --git https://github.com/cross-rs/cross
 # Build
 CROSS_CONFIG="Cross.local.toml" cross build --target="$VAR_TARGET" --verbose || exit
 
-# Local build
-# SYS="$HOME/.aurora-sysroot/x86_64"
-# export PKG_CONFIG_SYSROOT_DIR=$SYS
-# export PKG_CONFIG_PATH=$SYS/usr/lib/pkgconfig
-# export PKG_CONFIG_LIBDIR=$SYS/usr/lib
-# export LD_LIBRARY_PATH=$SYS/usr/lib
-# cargo build --target="$VAR_TARGET" --verbose || exit
-# unset PKG_CONFIG_SYSROOT_DIR
-# unset PKG_CONFIG_PATH
-# unset PKG_CONFIG_LIBDIR
-# unset LD_LIBRARY_PATH
-
 # Copy bin
-mkdir rpm/bin
-cp -fr $PWD/target/$VAR_TARGET/debug/aurora-rs $PWD/rpm/bin || exit
+mkdir rpm/bin && cp -fr $PWD/target/$VAR_TARGET/debug/aurora-rs $PWD/rpm/bin || exit
 
 # Build rpm
 $VAR_CLI services --rpmbuild "$PWD/rpm" || exit
+
+# Validate
+$VAR_CLI services --validate "$PWD/rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm" || exit
 
 # Sign rpm
 $VAR_CLI services --keysign "$PWD/rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm" || exit

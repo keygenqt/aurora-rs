@@ -10,6 +10,15 @@ fn main() {
     let include = &sysroot.join("usr/include").to_string_lossy().to_string();
     let lib = &sysroot.join("usr/lib").to_string_lossy().to_string();
 
+    // Get arch build
+    let target = env::var("CARGO_CFG_TARGET_ARCH").unwrap();
+    // Include static stdc++
+    if target == "aarch64" {
+        // @todo aarch64 qt crash
+        // println!("cargo:rustc-link-search=native={lib}/gcc/aarch64-meego-linux-gnu/12.3.1");
+        // println!("cargo:rustc-link-search=native=/usr/lib/gcc-cross/aarch64-linux-gnu/12");
+    }
+
     // Set search
     println!("cargo:rustc-link-search={lib}");
 
@@ -34,23 +43,12 @@ fn main() {
     CFG.exported_header_dirs.extend(qt5_network_include);
 
     // cxx
-    #[cfg(target_os = "linux")]
-    {
-        // Set static stdc++
+    if cfg!(target_os = "linux") {
         println!("cargo:rustc-link-lib=static=stdc++");
-        // Get arch build
-        let target = env::var("CARGO_CFG_TARGET_ARCH").unwrap();
-        // Include static stdc++
-        if target == "aarch64" {
-            println!("cargo:rustc-link-search=/usr/lib/gcc-cross/aarch64-linux-gnu/12");
-        }
-        // @todo aarch64 qt crash
         for bridge_name in ["format", "qnetwork"] {
             cxx_build::bridge(format!("src/cxx/rust/cxx_{bridge_name}.rs"))
                 .std("c++17")
                 .file(format!("src/cxx/cpp/{bridge_name}/cxx_{bridge_name}.cpp"))
-                .cpp_link_stdlib("stdc++")
-                .cpp_link_stdlib_static(true)
                 .compile(bridge_name);
             println!("cargo:rerun-if-changed=src/cxx/cpp/{bridge_name}/cxx_{bridge_name}.h");
             println!("cargo:rerun-if-changed=src/cxx/cpp/{bridge_name}/cxx_{bridge_name}.cpp");

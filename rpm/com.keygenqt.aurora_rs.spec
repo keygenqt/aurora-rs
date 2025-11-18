@@ -20,6 +20,8 @@ cp -a icons %{buildroot}/%{_datadir}
 cp -a applications %{buildroot}/%{_datadir}
 
 %files
+%defattr(-,root,root,-)
 %{_bindir}/%{name}
+%defattr(644,root,root,-)
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
