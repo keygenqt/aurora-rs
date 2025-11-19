@@ -1,23 +1,12 @@
 use std::{env, path::PathBuf};
 
-use cxx_build::CFG;
-
 fn main() {
-    // Init
-    // std::thread::sleep(std::time::Duration::from_secs(60));
-
     let sysroot = PathBuf::from(env::var("PKG_CONFIG_SYSROOT_DIR").unwrap());
     let include = &sysroot.join("usr/include").to_string_lossy().to_string();
     let lib = &sysroot.join("usr/lib").to_string_lossy().to_string();
 
-    // Get arch build
-    let target = env::var("CARGO_CFG_TARGET_ARCH").unwrap();
-    // Include static stdc++
-    if target == "aarch64" {
-        // @todo aarch64 qt crash
-        // println!("cargo:rustc-link-search=native={lib}/gcc/aarch64-meego-linux-gnu/12.3.1");
-        // println!("cargo:rustc-link-search=native=/usr/lib/gcc-cross/aarch64-linux-gnu/12");
-    }
+    // Set rustflags sysroot
+    println!("cargo:rustc-link-arg=--sysroot={}", sysroot.to_string_lossy());
 
     // Set search
     println!("cargo:rustc-link-search={lib}");
@@ -32,27 +21,22 @@ fn main() {
         .write_to_file(PathBuf::from(env::var("OUT_DIR").unwrap()).join("libappdir.rs"))
         .expect("Couldn't write appdir!");
 
-    // Qt5::Qt5Core
-    let qt5_core = pkg_config::probe_library("Qt5Core").unwrap();
-    let qt5_core_include = qt5_core.include_paths.iter().map(PathBuf::as_path);
-    CFG.exported_header_dirs.extend(qt5_core_include);
-
-    // Qt5::Qt5Network
-    let qt5_network = pkg_config::probe_library("Qt5Network").unwrap();
-    let qt5_network_include = qt5_network.include_paths.iter().map(PathBuf::as_path);
-    CFG.exported_header_dirs.extend(qt5_network_include);
-
-    // cxx
+    // Qt/cxx
     if cfg!(target_os = "linux") {
-        println!("cargo:rustc-link-lib=static=stdc++");
+        let cpp_libs = vec!["Qt5Core", "Qt5Network"];
+        let includes: Vec<Vec<PathBuf>> = cpp_libs.iter().map(|lib| pkg_config::probe_library(lib).unwrap().include_paths).collect();
         for bridge_name in ["format", "qnetwork"] {
             cxx_build::bridge(format!("src/cxx/rust/cxx_{bridge_name}.rs"))
+                .includes(includes.iter().flatten())
                 .std("c++17")
                 .file(format!("src/cxx/cpp/{bridge_name}/cxx_{bridge_name}.cpp"))
                 .compile(bridge_name);
             println!("cargo:rerun-if-changed=src/cxx/cpp/{bridge_name}/cxx_{bridge_name}.h");
             println!("cargo:rerun-if-changed=src/cxx/cpp/{bridge_name}/cxx_{bridge_name}.cpp");
             println!("cargo:rerun-if-changed=src/cxx/rust/cxx_{bridge_name}.rs");
+        }
+        for lib in cpp_libs {
+            println!("cargo:rustc-link-lib={lib}");
         }
     }
 }
