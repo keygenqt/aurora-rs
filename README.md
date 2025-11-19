@@ -1,13 +1,15 @@
 # Rust for Aurora OS
 
+![image](./data/preview.png)
+
+▶️ [RUTUBE](https://rutube.ru/video/6a73fc7fc82ef390203055e4c2bf0e6c/)
+
 A demonstration of cross-platform assembly of a Rust application for Aurora OS and interaction with the main interfaces:
 
 - D-Bus, (deviceinfo).
 - Clib, (libappdir).
 - С++, (example cxx).
 - Qt, (QNetworkConfigurationManager).
-
-> Aurora CLI is used for assembly >= 0.0.8.
 
 ### Build
 
@@ -78,7 +80,3 @@ Windows:
 ```shell
 sh run.sh
 ```
-
-### Preview
-
-![preview](data/preview.png)
