@@ -1,6 +1,6 @@
 # Rust for Aurora OS
 
-![image](./data/preview.png)
+![image](./data/preview2.png)
 
 ▶️ [RUTUBE](https://rutube.ru/video/6a73fc7fc82ef390203055e4c2bf0e6c/)
 
