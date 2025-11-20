@@ -63,9 +63,9 @@ CROSS_CONFIG="Cross.local.toml" cross build --target=x86_64-unknown-linux-gnu --
 
 ```json
 "rust-analyzer.cargo.extraEnv": {
-    "PKG_CONFIG_SYSROOT_DIR=/Users/keygenqt/.aurora-sysroot/aarch64",
-    "PKG_CONFIG_LIBDIR=/Users/keygenqt/.aurora-sysroot/aarch64",
-    "PKG_CONFIG_PATH=/Users/keygenqt/.aurora-sysroot/aarch64"
+    "PKG_CONFIG_SYSROOT_DIR": "/Users/keygenqt/.aurora-sysroot/aarch64",
+    "PKG_CONFIG_LIBDIR": "/Users/keygenqt/.aurora-sysroot/aarch64/usr/lib",
+    "PKG_CONFIG_PATH": "/Users/keygenqt/.aurora-sysroot/aarch64/usr/lib/pkgconfig"
 }
 ```
 
