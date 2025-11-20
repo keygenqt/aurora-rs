@@ -24,25 +24,25 @@ Create it at the root of the project and customize it to suit your needs.
 # armv7hl
 [target.armv7-unknown-linux-gnueabihf]
 env.volumes = [
-    "PKG_CONFIG_SYSROOT_DIR=/home/keygenqt/.aurora-sysroot/armv7hl",
-    "PKG_CONFIG_LIBDIR=/home/keygenqt/.aurora-sysroot/armv7hl",
-    "PKG_CONFIG_PATH=/home/keygenqt/.aurora-sysroot/armv7hl",
+    "PKG_CONFIG_SYSROOT_DIR=/Users/keygenqt/.aurora-sysroot/armv7hl",
+    "PKG_CONFIG_LIBDIR=/Users/keygenqt/.aurora-sysroot/armv7hl/usr/lib",
+    "PKG_CONFIG_PATH=/Users/keygenqt/.aurora-sysroot/armv7hl/usr/lib/pkgconfig",
 ]
 
 # aarch64
 [target.aarch64-unknown-linux-gnu]
 env.volumes = [
-    "PKG_CONFIG_SYSROOT_DIR=/home/keygenqt/.aurora-sysroot/aarch64",
-    "PKG_CONFIG_LIBDIR=/home/keygenqt/.aurora-sysroot/aarch64",
-    "PKG_CONFIG_PATH=/home/keygenqt/.aurora-sysroot/aarch64",
+    "PKG_CONFIG_SYSROOT_DIR=/Users/keygenqt/.aurora-sysroot/aarch64",
+    "PKG_CONFIG_LIBDIR=/Users/keygenqt/.aurora-sysroot/aarch64/usr/lib",
+    "PKG_CONFIG_PATH=/Users/keygenqt/.aurora-sysroot/aarch64/usr/lib/pkgconfig",
 ]
 
 # x86_64
 [target.x86_64-unknown-linux-gnu]
 env.volumes = [
-    "PKG_CONFIG_SYSROOT_DIR=/home/keygenqt/.aurora-sysroot/x86_64",
-    "PKG_CONFIG_LIBDIR=/home/keygenqt/.aurora-sysroot/x86_64",
-    "PKG_CONFIG_PATH=/home/keygenqt/.aurora-sysroot/x86_64",
+    "PKG_CONFIG_SYSROOT_DIR=/Users/keygenqt/.aurora-sysroot/x86_64",
+    "PKG_CONFIG_LIBDIR=/Users/keygenqt/.aurora-sysroot/x86_64/usr/lib",
+    "PKG_CONFIG_PATH=/Users/keygenqt/.aurora-sysroot/x86_64/usr/lib/pkgconfig",
 ]
 ```
 
