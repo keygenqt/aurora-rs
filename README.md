@@ -11,6 +11,12 @@ A demonstration of cross-platform assembly of a Rust application for Aurora OS a
 - С++, (example cxx).
 - Qt, (QNetworkConfigurationManager).
 
+And also:
+
+- Create window
+- Draw on skia
+- Get library "with you"
+
 ### Build
 
 - Cross: https://crates.io/crates/cross

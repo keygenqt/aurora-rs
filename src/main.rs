@@ -1,12 +1,32 @@
+use winit::event_loop::EventLoop;
+
 mod clib;
 mod cxx;
 mod dbus;
+mod window;
+
+#[derive(Clone, Debug)]
+pub struct AppInfo {
+    title: String,
+    model: String,
+    location: String,
+    format: String,
+    is_online: bool,
+}
+
+impl AppInfo {
+    fn new() -> Self {
+        AppInfo {
+            title: "Rust for Aurora OS".to_string(),
+            model: dbus::dbus_deviceinfo::ac_device_info_get_device_model().expect("Failed get device model"),
+            location: clib::c_appdir::get_app_cache_location().expect("Failed get app cache location"),
+            format: cxx::rust::cxx_format::time("yyyy-mm-ddThh:mm:ssZ"),
+            is_online: cxx::rust::cxx_qnetwork::is_online(),
+        }
+    }
+}
 
 fn main() {
-    println!("--------------");
-    println!("| D-Bus       > Device model: {:?}", dbus::dbus_deviceinfo::ac_device_info_get_device_model());
-    println!("| Clang, Lib  > Cache location: {:?}", clib::c_appdir::get_app_cache_location());
-    println!("| C++, Clean  > Format time: {:?}", cxx::rust::cxx_format::time("yyyy-mm-ddThh:mm:ssZ"));
-    println!("| C++, Qt     > Is online:: {:?}", cxx::rust::cxx_qnetwork::is_online());
-    println!("--------------");
+    // Run window
+    window::app_winit::main::show(AppInfo::new(), EventLoop::new().unwrap());
 }

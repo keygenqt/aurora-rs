@@ -10,17 +10,24 @@ libc = "0.2"
 dbus = "0.9.9"
 cxx = "1.0"
 
+softbuffer = "0.4.6"
+image = "0.25.6"
+skia-safe = "0.90.0"
+winit = { git = "https://github.com/lmaxyz/winit", branch = "aurora" }
+
 [build-dependencies]
 bindgen = "0.72"
 cxx-build = "1.0"
 pkg-config = "0.3"
 
 [profile.dev]
+rpath = true
 strip = true
 lto = true
 codegen-units = 1
 
 [profile.release]
+rpath = true
 strip = true
 lto = true
 codegen-units = 1
@@ -30,14 +37,14 @@ panic = "abort"
 # armv7hl + .cargo/config.toml
 [workspace.metadata.cross.target.armv7-unknown-linux-gnueabihf]
 image = "ubuntu:24.04"
-pre-build = ["apt-get update && apt-get -y install build-essential clang pkg-config g++-arm-linux-gnueabihf"]
+pre-build = ["apt-get update && apt-get -y install curl build-essential clang pkg-config g++-arm-linux-gnueabihf"]
 
 # aarch64 + .cargo/config.toml
 [workspace.metadata.cross.target.aarch64-unknown-linux-gnu]
 image = "ubuntu:24.04"
-pre-build = ["apt-get update && apt-get -y install build-essential clang pkg-config g++-aarch64-linux-gnu"]
+pre-build = ["apt-get update && apt-get -y install curl build-essential clang pkg-config g++-aarch64-linux-gnu"]
 
 # x86_64 + .cargo/config.toml
 [workspace.metadata.cross.target.x86_64-unknown-linux-gnu]
 image = "ubuntu:24.04"
-pre-build = ["apt-get update && apt-get -y install build-essential clang pkg-config"]
+pre-build = ["apt-get update && apt-get -y install curl build-essential clang pkg-config"]

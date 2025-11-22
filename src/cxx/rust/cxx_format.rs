@@ -12,5 +12,5 @@ mod ffi {
 
 /// Example execute
 pub fn time(data: &str) -> String {
-    ffi::new_format().pin_mut().time(data.to_string())
+    ffi::new_format().pin_mut().time(data.to_string()).trim().to_string()
 }
