@@ -86,3 +86,7 @@ Windows:
 ```shell
 sh run.sh
 ```
+
+### Preview
+
+![image](./data/preview1.png)
