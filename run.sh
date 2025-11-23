@@ -4,7 +4,7 @@
 cd "$(dirname "$(realpath "$0")")" || exit
 
 # Set docker image build tools
-export AURORA_CLI_IMAGE="aurora-build-tools:5.2.0.70"
+# export AURORA_CLI_IMAGE="aurora-build-tools:5.2.0.70"
 
 # Set aurora-cli
 VAR_CLI="aurora-cli"
