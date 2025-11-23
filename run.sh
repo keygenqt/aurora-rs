@@ -3,9 +3,11 @@
 # Project dir
 cd "$(dirname "$(realpath "$0")")" || exit
 
+# Set docker image build tools
+export AURORA_CLI_IMAGE="aurora-build-tools:5.2.0.70"
+
 # Set aurora-cli
 VAR_CLI="aurora-cli"
-VAR_CLI="/Users/keygenqt/Documents/Gitcode/Projects/aurora-cli/target/debug/aurora-cli"
 
 # Check OS
 if [[ "$OSTYPE" == "linux"* ]]; then
@@ -50,14 +52,14 @@ if [ ! -d "$HOME/.aurora-sysroot/$VAR_ARCH/usr/include" ]; then
   $VAR_CLI services --sysroot || exit
 fi
 
-# Moc Q_OBJECT files
+# # Moc Q_OBJECT files
 $VAR_CLI services --moc ./ || exit
 
-# # Install cross
-# # https://github.com/cross-rs/cross
+# # # Install cross
+# # # https://github.com/cross-rs/cross
 cargo install cross --git https://github.com/cross-rs/cross
 
-# Build
+# # Build
 CROSS_CONFIG="Cross.local.toml" RUSTFLAGS="-C rpath=yes" cross build --target="$VAR_TARGET" --verbose || exit
 
 # Local build
@@ -66,7 +68,7 @@ CROSS_CONFIG="Cross.local.toml" RUSTFLAGS="-C rpath=yes" cross build --target="$
 # cargo build --target="$VAR_TARGET" --verbose || exit
 # unset PKG_CONFIG_SYSROOT_DIR
 
-# # Copy bin
+# Copy bin
 mkdir rpm/bin && cp -fr $PWD/target/$VAR_TARGET/debug/aurora-rs $PWD/rpm/bin || exit
 
 # Build rpm
