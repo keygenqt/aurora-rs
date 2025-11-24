@@ -60,7 +60,7 @@ $VAR_CLI services --moc ./ || exit
 cargo install cross --git https://github.com/cross-rs/cross
 
 # # Build
-CROSS_CONFIG="Cross.local.toml" RUSTFLAGS="-C rpath=yes" cross build --target="$VAR_TARGET" --verbose || exit
+CROSS_CONFIG="Cross.local.toml" cross build --target="$VAR_TARGET" --verbose || exit
 
 # Local build
 # SYS="/home/keygenqt/.aurora-sysroot/$VAR_ARCH"
