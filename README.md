@@ -4,6 +4,8 @@
 
 ▶️ [RUTUBE](https://rutube.ru/video/6a73fc7fc82ef390203055e4c2bf0e6c/)
 
+📄 [BOOSTY](https://boosty.to/keygenqt/posts/4ab35d1a-4593-4cce-9ab0-caaaf84baebb)
+
 A demonstration of cross-platform assembly of a Rust application for Aurora OS and interaction with the main interfaces:
 
 - D-Bus, (deviceinfo).
