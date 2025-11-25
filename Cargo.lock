@@ -162,7 +162,6 @@ dependencies = [
  "cxx-build",
  "dbus",
  "image",
- "libc",
  "pkg-config",
  "skia-safe",
  "softbuffer",

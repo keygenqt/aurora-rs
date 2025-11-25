@@ -6,10 +6,8 @@ license = "Apache-2.0"
 links = "aurora-rs"
 
 [dependencies]
-libc = "0.2"
 dbus = "0.9.9"
 cxx = "1.0"
-
 softbuffer = "0.4.6"
 image = "0.25.6"
 skia-safe = "0.90.0"

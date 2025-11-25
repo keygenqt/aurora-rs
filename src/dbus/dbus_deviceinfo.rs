@@ -6,7 +6,7 @@ const DEST: &str = "ru.omp.deviceinfo";
 const PATH: &str = "/ru/omp/deviceinfo/Features";
 const IFACE: &str = "ru.omp.deviceinfo.Features";
 
-pub fn ac_device_info_get_device_model() -> Option<String> {
+pub fn device_info_get_device_model() -> Option<String> {
     let conn = match Connection::new_system() {
         Ok(conn) => conn,
         Err(_) => return None,

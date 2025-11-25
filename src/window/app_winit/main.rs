@@ -1,7 +1,9 @@
 use image::GenericImageView;
+use softbuffer::Context;
+use softbuffer::Surface;
 use std::num::NonZeroU32;
-use winit::event::WindowEvent;
 use winit::event::Event;
+use winit::event::WindowEvent;
 use winit::event_loop::{ControlFlow, EventLoop};
 
 use crate::AppInfo;
@@ -15,10 +17,10 @@ pub fn show(app_info: AppInfo, event_loop: EventLoop<()>) {
         move |elwt| {
             let app_info = app_info.clone();
             let window = application::make_window(&app_info, elwt, |w| w);
-            let context = softbuffer::Context::new(window.clone()).unwrap();
+            let context = Context::new(window.clone()).unwrap();
             (app_info, window, context)
         },
-        |_elwt, (_app_info, window, context)| softbuffer::Surface::new(context, window.clone()).unwrap(),
+        |_elwt, (_, window, context)| Surface::new(context, window.clone()).unwrap(),
     )
     .with_event_handler(|(app_info, window, _context), surface, event, elwt| {
         elwt.set_control_flow(ControlFlow::Wait);
@@ -39,9 +41,12 @@ pub fn show(app_info: AppInfo, event_loop: EventLoop<()>) {
                         .resize(width, height)
                         .expect("Failed to resize surface");
                     // Get image from skia draw
-                    let image =
-                        app_skia::main::draw(app_info, u32::from(width) as i32, u32::from(height) as i32)
-                            .expect("Failed to draw image");
+                    let image = app_skia::main::draw(
+                        app_info,
+                        u32::from(width) as i32,
+                        u32::from(height) as i32,
+                    )
+                    .expect("Failed to draw image");
                     // Update buffer
                     let mut buffer = surface.buffer_mut().unwrap();
                     let width = image.width() as usize;

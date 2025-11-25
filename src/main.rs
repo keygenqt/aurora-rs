@@ -18,8 +18,8 @@ impl AppInfo {
     fn new() -> Self {
         AppInfo {
             title: "Rust for Aurora OS".to_string(),
-            model: dbus::dbus_deviceinfo::ac_device_info_get_device_model().expect("Failed get device model"),
-            location: clib::c_appdir::get_app_cache_location().expect("Failed get app cache location"),
+            model: dbus::dbus_deviceinfo::device_info_get_device_model().unwrap(),
+            location: clib::c_appdir::get_app_cache_location().unwrap(),
             format: cxx::rust::cxx_format::time("yyyy-mm-ddThh:mm:ssZ"),
             is_online: cxx::rust::cxx_qnetwork::is_online(),
         }
