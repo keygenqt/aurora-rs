@@ -2,9 +2,9 @@
 
 ![image](./data/preview2.png)
 
-▶️ [RUTUBE](https://rutube.ru/video/6a73fc7fc82ef390203055e4c2bf0e6c/)
-
+📄 [CSDN](https://blog.csdn.net/2511_93770219/article/details/155327544)
 📄 [BOOSTY](https://boosty.to/keygenqt/posts/4ab35d1a-4593-4cce-9ab0-caaaf84baebb)
+▶️ [RUTUBE](https://rutube.ru/video/6a73fc7fc82ef390203055e4c2bf0e6c/)
 
 A demonstration of cross-platform assembly of a Rust application for Aurora OS and interaction with the main interfaces:
 
@@ -88,6 +88,8 @@ Windows:
 ```shell
 sh run.sh
 ```
+
+> Skia-safe doesn't have a version for armv7hl. But there are no emulators for it either—the goal was to demonstrate working with Aurora OS and cross-compiling on different platforms. The arm32 architecture is ignored in many projects, and many have labeled it obsolete.
 
 ### Preview
 
