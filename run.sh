@@ -8,6 +8,7 @@ cd "$(dirname "$(realpath "$0")")" || exit
 
 # Set aurora-cli
 VAR_CLI="aurora-cli"
+VAR_CLI="/Users/keygenqt/Documents/Gitcode/Projects/aurora-cli/target/debug/aurora-cli"
 
 # Check OS
 if [[ "$OSTYPE" == "linux"* ]]; then
@@ -32,16 +33,6 @@ if [[ -z "$VAR_ARCH" ]]; then
   echo "Not supported $OSTYPE"
 fi
 
-# Set emulator
-VAR_DEVICE_HOST="localhost"
-VAR_DEVICE_PORT="2223"
-VAR_DEVICE_KEY="$VAR_SDK/vmshare/ssh/private_keys/sdk"
-
-# Set device
-# VAR_DEVICE_HOST="192.168.2.15"
-# VAR_DEVICE_PORT="22"
-# VAR_DEVICE_KEY="$HOME/.ssh/id_rsa"
-
 # Clear build
 rm -rf target
 rm -rf rpm/RPMS
@@ -55,18 +46,12 @@ fi
 # # Moc Q_OBJECT files
 $VAR_CLI services --moc ./ || exit
 
-# # # Install cross
-# # # https://github.com/cross-rs/cross
+# Install cross
+# https://github.com/cross-rs/cross
 cargo install cross --git https://github.com/cross-rs/cross
 
-# # Build
+# Build
 CROSS_CONFIG="Cross.local.toml" cross build --target="$VAR_TARGET" --verbose || exit
-
-# Local build
-# SYS="/home/keygenqt/.aurora-sysroot/$VAR_ARCH"
-# export PKG_CONFIG_SYSROOT_DIR="/home/keygenqt/.aurora-sysroot/$VAR_ARCH"
-# cargo build --target="$VAR_TARGET" --verbose || exit
-# unset PKG_CONFIG_SYSROOT_DIR
 
 # Copy bin
 mkdir rpm/bin && cp -fr $PWD/target/$VAR_TARGET/debug/aurora-rs $PWD/rpm/bin || exit
@@ -80,46 +65,8 @@ $VAR_CLI services --validate "$PWD/rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs-0.0
 # Sign rpm
 $VAR_CLI services --keysign "$PWD/rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm" || exit
 
-# Remove old rmp
-ssh -o ConnectTimeout=2 \
-  -i $VAR_DEVICE_KEY \
-  -o StrictHostKeyChecking=no \
-  -p $VAR_DEVICE_PORT defaultuser@$VAR_DEVICE_HOST \
-  "rm /home/defaultuser/Downloads/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm" 2>/dev/null
+# Install on emulator
+$VAR_CLI emulator --install "$PWD/rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm" || exit
 
-# Upload
-scp -P $VAR_DEVICE_PORT \
-  -i $VAR_DEVICE_KEY \
-  ./rpm/RPMS/$VAR_ARCH/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm \
-  defaultuser@$VAR_DEVICE_HOST:/home/defaultuser/Downloads
-
-# Uninstall
-ssh -o ConnectTimeout=2 \
-  -i $VAR_DEVICE_KEY \
-  -o StrictHostKeyChecking=no \
-  -p $VAR_DEVICE_PORT defaultuser@$VAR_DEVICE_HOST \
-  "gdbus call --system --dest ru.omp.APM --object-path /ru/omp/APM --method ru.omp.APM.Remove com.keygenqt.aurora_rs '{}'"
-
-# Install
-ssh -o ConnectTimeout=2 \
-  -i $VAR_DEVICE_KEY \
-  -o StrictHostKeyChecking=no \
-  -p $VAR_DEVICE_PORT defaultuser@$VAR_DEVICE_HOST \
-  "gdbus call --system --dest ru.omp.APM --object-path /ru/omp/APM --method ru.omp.APM.Install ~/Downloads/com.keygenqt.aurora_rs-0.0.1-1.$VAR_ARCH.rpm '{}'" || exit
-
-# Delay install
-sleep 1
-
-# Run new
-ssh -o ConnectTimeout=2 \
-  -i $VAR_DEVICE_KEY \
-  -o StrictHostKeyChecking=no \
-  -p $VAR_DEVICE_PORT defaultuser@$VAR_DEVICE_HOST \
-  "runtime-manager-tool Control startDebug com.keygenqt.aurora_rs --output-to-console" || exit
-
-# Run old
-# ssh -o ConnectTimeout=2 \
-#   -i $VAR_DEVICE_KEY \
-#   -o StrictHostKeyChecking=no \
-#   -p $VAR_DEVICE_PORT defaultuser@$VAR_DEVICE_HOST \
-#   "invoker --type=qt5 com.keygenqt.aurora_rs" || exit
+# Run on emulator
+$VAR_CLI emulator --run "com.keygenqt.aurora_rs" || exit
